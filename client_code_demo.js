@@ -65,6 +65,7 @@ $(function () {
 
     battle.on('connect', function () {
       console.log("battle connect.");
+      //battle.emit('send message', { type : "get_data"});
     }).on('connect_failed', function () {
       console.log("battle connect_failed");    
     }).on('server ready', function (data) {

@@ -1,26 +1,26 @@
 {
-  "name": "empirebt_websockets",
-  "version": "0.0.1",
-  "description": "EmpireBT Websocket Server",
-  "main": "server.js",
-  "scripts": {
-    "test": "jshint --show-non-errors *.js battle_manager/*.js io_modules/*.js webservices_clients/*.js"
-  },
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/Mamsaac/empirebt_websocket_server"
-  },
-  "author": "Mamsaac",
-  "license": "MIT",
-  "bugs": {
-    "url": "https://github.com/Mamsaac/empirebt_websocket_server/issues"
-  },
-  "dependencies" : {
-    "amqplib" : "~0.1",
-    "rest" : "~1",
-    "socket.io" : "~0.9",
-    "async" : "~0.2",
-    "when" : "~3.0"
-  },
-  "homepage": "https://github.com/Mamsaac/empirebt_websocket_server"
+    "author": "Mamsaac",
+    "bugs": {
+        "url": "https://github.com/Mamsaac/empirebt_websocket_server/issues"
+    },
+    "dependencies": {
+        "amqplib": "~0.1",
+        "async": "~0.2",
+        "rest": "~1",
+        "socket.io": "~0.9",
+        "when": "~3.0"
+    },
+    "description": "EmpireBT Websocket Server",
+    "homepage": "https://github.com/Mamsaac/empirebt_websocket_server",
+    "license": "MIT",
+    "main": "server.js",
+    "name": "empirebt_websockets",
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/Mamsaac/empirebt_websocket_server"
+    },
+    "scripts": {
+        "test": "jshint --show-non-errors *.js battle_manager/*.js io_modules/*.js webservices_clients/*.js"
+    },
+    "version": "0.0.1"
 }

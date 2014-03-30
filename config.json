@@ -1,0 +1,13 @@
+{
+	"port" : 8000,
+	"base_url_webservice" : "http://localhost:8001/",
+	"amqp_server" : "amqp://localhost",
+	"io" : {
+		"battle_toclient" : true,
+		"chat_empire" : true,
+		"chat_oneonone" : true
+	},
+	"amqp" : {
+		"battle_manager" : true
+	}
+}

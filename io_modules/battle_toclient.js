@@ -39,7 +39,6 @@ module.exports = function (io, amqp_connection, webservices_clients) {
         emmit_channel = em_ch;
         consume_channel = cs_ch;
         channel_queue = ch_qu;
-
         socket.on('send message', 
           amqp_helpers.send_battle_toclient_helper(emmit_channel, ex, 'manager', user_id, battle_id)
         );

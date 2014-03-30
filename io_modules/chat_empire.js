@@ -12,6 +12,7 @@ module.exports = function (io, amqp_connection, webservices_clients) {
     .on('connection', function (socket) {
       var user_id = socket.handshake.user_id;
       //var token = socket.handshake.token;
+      var username = socket.handshake.username;
       var empire_id = socket.handshake.empire_id;
       var ex = 'chat_empire';
       var PRE_ROUTE = 'empire';
@@ -25,7 +26,7 @@ module.exports = function (io, amqp_connection, webservices_clients) {
         consume_channel = cs_ch;
         channel_queue = ch_qu;
 
-        amqp_helpers.presence_helper(emmit_channel, ex, PRE_ROUTE, amqp_helpers.LOGIN, user_id);
+        amqp_helpers.presence_helper(emmit_channel, ex, PRE_ROUTE, amqp_helpers.LOGIN, user_id, username);
         //we don't really need the result of the callback...
         presence.chat_empire_connected(user_id, 'true', empire_id, function (){});
         socket.on('send message', amqp_helpers.send_message_helper(

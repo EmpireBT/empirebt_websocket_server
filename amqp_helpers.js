@@ -36,10 +36,11 @@ module.exports = amqp_helpers = {
     bm_emmit_channel.sendToQueue(bm_queue, 
       amqp_helpers.data_builder(data), { deliveryMode: true });
   },
-  presence_helper : function (emmit_channel, exchange, route, type, id) {
+  presence_helper : function (emmit_channel, exchange, route, type, id, username) {
     var data_to_send = {
       data : {
-        user_id : id
+        user_id : id,
+        username : username
       },
       type : 'presence ' + type
     };
@@ -49,7 +50,6 @@ module.exports = amqp_helpers = {
   oneonone_amqp_handler : function (socket) {
     return function (msg) {
       var data = JSON.parse(msg.content.toString());
-      console.log(data);
       socket.emit(data.type, data.data);
     };
   },
