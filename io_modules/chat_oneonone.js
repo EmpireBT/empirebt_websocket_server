@@ -10,6 +10,7 @@ module.exports = function (io, amqp_connection, webservices_clients) {
     .authorization(authorization.chat_oneonone)
     .on('connection', function (socket) {
       var user_id = socket.handshake.user_id;
+      var username = socket.handshake.username;
       //var token = socket.handshake.token;
       var ex = 'chat_oneonone';
       var PRE_ROUTE = 'oneonone';
@@ -22,7 +23,7 @@ module.exports = function (io, amqp_connection, webservices_clients) {
         emmit_channel = em_ch;
         consume_channel = cs_ch;
         channel_queue = ch_qu;
-        amqp_helpers.presence_helper(emmit_channel, ex, PRE_ROUTE, amqp_helpers.LOGIN, user_id);
+        amqp_helpers.presence_helper(emmit_channel, ex, PRE_ROUTE, amqp_helpers.LOGIN, user_id, username);
         //we don't really need the result of the callback...
         presence.chat_oneonone_connected(user_id, 'true', function (){});
         socket.on('send message', amqp_helpers.send_message_helper(

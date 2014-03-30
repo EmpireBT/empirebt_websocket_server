@@ -5,7 +5,8 @@ var app = require('http').createServer(),
     amqp = require('amqplib');
 
 var settings = {
-  BASE_URL : 'http://10.20.217.29:8000/'
+  BASE_URL : 'http://10.20.217.29:8000/',
+  PORT : '8000'
 };
 
 var webservices_clients = {
@@ -14,7 +15,7 @@ var webservices_clients = {
   battle : require('./webservices_clients/battle')(settings)
 };
 var amqp_connection = null;
-app.listen(8000);
+app.listen(settings.PORT);
 
 
 io.configure(function () {

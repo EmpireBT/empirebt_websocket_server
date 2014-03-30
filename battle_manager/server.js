@@ -1,13 +1,7 @@
 /*jslint node: true */
 "use strict";
-//var GameRunner = require('./game_runner');
-//this is a mock!
-var GameRunner = function (all_game_data) {
-  this.game_data = all_game_data;
-  this.processEvent = function(data) {
-    this.data = data;
-  };
-};
+var GameRunner = require('./game_runner');
+
 //missing using battle_ws to save when the game finishes (save to battle_ws.result)
 var battle_ws = require('../webservices_clients/battle');
 var amqp_helpers = require('../amqp_helpers');
@@ -37,36 +31,61 @@ module.exports = function (amqp_connection, webservices_clients) {
     var local_runner;
     var queue_bindings = [ PRE_ROUTE + battle_id ];
     var client_route = PRE_ROUTE_EMMIT + battle_id;
-
+    var fixed_game_data;
     //we can now start the new manager. Tell that we can setup more managers now.
     bm_channel.ack(msg);
-
-    battle_ws.info(battle_id, function (err, game_data) {
-      //handle errors
-      if (err !== null) return;
-      //setup game runner
-      local_runner = new GameRunner(game_data);
-      game_runners[battle_id] = local_runner;
-
-      //now lets start receiving events and pass them either to game_runner or to the clients
-      amqp_helpers.create_default_channels(
+    amqp_helpers.create_default_channels(
           amqp_connection, ex, queue_bindings, 
           battle_manager_consumer, function (em_ch, cs_ch, ch_qu) {
-        emmit_channel = em_ch;
-        consume_channel = cs_ch;
-        channel_queue = ch_qu;
+      emmit_channel = em_ch;
+      consume_channel = cs_ch;
+      channel_queue = ch_qu;
+      battle_ws.info(battle_id, function (err, game_data) {
+        //handle errors
+        if (err !== null) return;
+        //setup game runner
+        console.log("HERE I AM")
+        fixed_game_data = {
+          tiles : game_data.battlefield,
+          attacker : {
+            id : game_data.attacker,
+            sp_start : game_data.sp_attacker,
+            units : game_data.conf_attacker.units
+          },
+          defender : {
+            id : game_data.defender,
+            sp_start : game_data.sp_defender,
+            units : game_data.conf_defender.units
+          }
+        };
+        local_runner = new GameRunner(fixed_game_data);
+        game_runners[battle_id] = local_runner;
         emmit_channel.publish(ex, client_route, amqp_helpers.data_builder({
           type : "server ready",
-          data : "server ready!"
+          data : {
+            game_data : fixed_game_data
+          }
         }));
+        //now lets start receiving events and pass them either to game_runner or to the clients
+        
       });
     });
+    
 
     function battle_manager_consumer(msg) {
       var data = JSON.parse(msg.content.toString());
+      console.log(data);
       //fucking refactor this shit!
       //no joking around, data needs to be processed according to real GameRunner API
-      if (data.type == "game_data") {
+      if (data.data.type == 'get_data') {
+        emmit_channel.publish(ex, client_route, amqp_helpers.data_builder({
+          type : "server ready",
+          data : {
+            game_data : fixed_game_data
+          }
+        }));
+      }
+      if (data.data.type == "game_data") {
         local_runner.processEvent(data.data, function(res) {
           //if res includes something about game_ended or some shit,
           //don't forget to close channels
