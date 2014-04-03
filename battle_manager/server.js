@@ -44,6 +44,10 @@ module.exports = function (amqp_connection, webservices_clients) {
         //handle errors
         if (err !== null) return;
         //setup game runner
+<<<<<<< HEAD
+=======
+        console.log("HERE I AM")
+>>>>>>> f90353df1b4bddc8e0c4207856c0ac9ecb60f51c
         fixed_game_data = {
           tiles : game_data.battlefield,
           attacker : {
@@ -73,6 +77,7 @@ module.exports = function (amqp_connection, webservices_clients) {
 
     function battle_manager_consumer(msg) {
       var data = JSON.parse(msg.content.toString());
+      console.log(data);
       //fucking refactor this shit!
       //no joking around, data needs to be processed according to real GameRunner API
       if (data.data.type == 'get_data') {

@@ -21,6 +21,7 @@ function info(battle_id, cb) {
       var tiles = [];
       for (var i = 0; i < 24; i++) {
         for (var j = 0; j < 20; j++) {
+<<<<<<< HEAD
           var st = [226,225,227,228,229,202,203,204,179,250,251,252,275];
           var is_hill = false;
           for (var s = 0; s < st.length; s++) {
@@ -33,6 +34,12 @@ function info(battle_id, cb) {
           tiles.push({obstacle : false, position:{x:i,y:j},is_hill:is_hill});
         }
       }
+=======
+          tiles.push({obstacle : false, position:{x:i,y:j},is_hill:false});
+        }
+      }
+      console.log("I DO CALL!");
+>>>>>>> f90353df1b4bddc8e0c4207856c0ac9ecb60f51c
       return cb(null, { 
         "attacker" : "1", 
         "defender" : "2", 
