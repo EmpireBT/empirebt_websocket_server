@@ -89,14 +89,12 @@ module.exports = amqp_helpers = {
   },
   send_battle_toclient_helper : function(emmit_channel, ex, target, user_id, battle_id) {
     return function (data) {
-      console.log("send_battle_toclient_helper", data, ex, target, user_id)
       var binding = '1v1.' + target + '.' + battle_id;
       var data_to_send = {
         from : user_id,
         data : data
       };
       var message = amqp_helpers.data_builder(data_to_send);
-      console.log("HERE I AM", data, ex, binding);
       emmit_channel.publish(ex, binding, message);
     };
   },
