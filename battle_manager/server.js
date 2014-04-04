@@ -1,6 +1,6 @@
 /*jslint node: true */
 "use strict";
-var GameRunner = require('./game_runner');
+var GameRunner = require('../gamerunner/game_runner');
 
 //missing using battle_ws to save when the game finishes (save to battle_ws.result)
 var battle_ws = require('../webservices_clients/battle');

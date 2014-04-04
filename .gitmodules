@@ -1,0 +1,3 @@
+[submodule "gamerunner"]
+	path = gamerunner
+	url = git://github.com/EmpireBT/empirebt_gamerunner.git
