@@ -44,10 +44,6 @@ module.exports = function (amqp_connection, webservices_clients) {
         //handle errors
         if (err !== null) return;
         //setup game runner
-<<<<<<< HEAD
-=======
-        console.log("HERE I AM")
->>>>>>> f90353df1b4bddc8e0c4207856c0ac9ecb60f51c
         fixed_game_data = {
           tiles : game_data.battlefield,
           attacker : {
